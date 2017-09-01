@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({ template: 'app/index.html' })
 
 module.exports = {
-  devtool: 'eval-source-map',
+  devtool: 'source-map',
   entry: __dirname + "/app/app.js",
   output: {
     path: __dirname + "/public/build",
