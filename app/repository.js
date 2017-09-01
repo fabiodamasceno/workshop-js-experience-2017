@@ -25,8 +25,7 @@ export default class Repository{
         this.repositoryContainer.innerHTML += template(item)
     }
     searchRepositories(name){
-        this.list
-            .getList(name)
+        this.list(name)
             .then((res) => {
                 this.bindList(res.data)
             })

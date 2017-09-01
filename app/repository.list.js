@@ -3,8 +3,4 @@ import axios from 'axios'
 
 const apiUrl = "https://api.github.com/users/"
 
-export default class RepositoryList{
-    getList(name){
-        return axios.get(`${apiUrl}${name}/repos`)
-    }
-}
+export default (name) => axios.get(`${apiUrl}${name}/repos`)

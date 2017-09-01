@@ -4,7 +4,7 @@ import sinonChai from 'sinon-chai'
 import { JSDOM } from 'jsdom'
 import template from './repository.template'
 import Repository from './repository'
-import RepositoryList from './repository.list'
+import repositoryList from './repository.list'
 
 chai.should()
 chai.use(sinonChai)
@@ -12,7 +12,7 @@ chai.use(sinonChai)
 describe('Repository', () => {
     describe('When calling cleanRepositoryList from repository', () => {
         it('should clean repository container', () => {
-            const repositoryList = sinon.mock(RepositoryList)
+            const repositoryList = sinon.mock(repositoryList)
             const domStub = new JSDOM(`
                 <input id="txtSearch" type="text" />
                 <a id="btnSearch"></a>
@@ -27,7 +27,7 @@ describe('Repository', () => {
     })
     describe('When calling appendTemplateToRepositoryContainer from repository', () => {
         it('should append template in repository container', () => {
-            const repositoryList = sinon.spy(RepositoryList)
+            const repositoryList = sinon.spy(repositoryList)
             const templateStub = sinon.stub()
             templateStub.withArgs('teste').returns('<div>teste</div>')
             const domStub = new JSDOM(`
@@ -42,19 +42,17 @@ describe('Repository', () => {
         })
     })
     describe('When calling searchRepositories from repository', () => {
-        it('should call getList from repository list', () => {
-            const repositoryList = { 
-                getList: sinon.spy(new RepositoryList().getList) 
-            }
+        it('should call repository list', () => {
+            const mockRepositoryList = sinon.spy(repositoryList)
             const domStub = new JSDOM(`
                 <!DOCTYPE html>
                 <input id="txtSearch" type="text" />
                 <a id="btnSearch"></a>
                 <ul id="repoList"></ul>
             `).window;
-            const repository = new Repository(domStub, repositoryList)
+            const repository = new Repository(domStub, mockRepositoryList)
             repository.searchRepositories('teste')
-            repositoryList.getList.should.have.been.calledWith('teste')
+            mockRepositoryList.should.have.been.calledWith('teste')
         })
     })
 })
